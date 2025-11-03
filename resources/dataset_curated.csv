@@ -1,0 +1,72 @@
+Disease,Symptom_1,Symptom_2,Symptom_3,Symptom_4,Symptom_5,Symptom_6,Symptom_7,Symptom_8,Symptom_9,Symptom_10
+Heart Disease,Chest pain,Shortness of breath,Fatigue,Irregular heartbeat,Nausea,Sweating,Jaw pain,Arm pain,Dizziness,Weakness
+Hypertension,Severe headache,Nosebleeds,Fatigue,Chest pain,Dizziness,Blurred vision,Irregular heartbeat,Shortness of breath,Neck pain,Anxiety
+Diabetes,Increased thirst,Frequent urination,Hunger,Fatigue,Blurred vision,Slow healing wounds,Numbness,Tingling,Weight loss,Frequent infections
+Asthma,Shortness of breath,Wheezing,Coughing,Chest tightness,Difficulty breathing,Rapid breathing,Fatigue,Anxiety,Mucus production,Difficulty sleeping
+Pneumonia,Fever,Cough,Chest pain,Shortness of breath,Fatigue,Sweating,Chills,Nausea,Vomiting,Confusion
+Bronchitis,Cough,Mucus production,Fatigue,Shortness of breath,Chest discomfort,Wheezing,Mild fever,Chills,Body aches,Sore throat
+Chronic Obstructive Pulmonary Disease,Shortness of breath,Wheezing,Chronic cough,Chest tightness,Fatigue,Frequent respiratory infections,Mucus production,Weight loss,Swelling in ankles,Cyanosis
+Tuberculosis,Persistent cough,Coughing up blood,Chest pain,Fatigue,Weight loss,Loss of appetite,Night sweats,Fever,Chills,Weakness
+COVID-19,Fever,Cough,Shortness of breath,Fatigue,Body aches,Loss of taste,Loss of smell,Sore throat,Headache,Congestion
+Influenza,Fever,Cough,Sore throat,Body aches,Headache,Chills,Fatigue,Congestion,Muscle pain,Weakness
+Gastritis,Abdominal pain,Nausea,Vomiting,Bloating,Loss of appetite,Indigestion,Belching,Burning sensation,Hiccups,Feeling full
+Peptic Ulcer,Abdominal pain,Burning sensation,Nausea,Vomiting,Bloating,Loss of appetite,Weight loss,Blood in stool,Dark stools,Heartburn
+Gastroesophageal Reflux Disease,Heartburn,Acid reflux,Chest pain,Difficulty swallowing,Regurgitation,Sour taste,Cough,Hoarseness,Throat irritation,Belching
+Irritable Bowel Syndrome,Abdominal pain,Bloating,Gas,Diarrhea,Constipation,Cramping,Mucus in stool,Urgency,Relief after bowel movement,Food intolerance
+Crohn's Disease,Abdominal pain,Diarrhea,Weight loss,Fatigue,Fever,Blood in stool,Reduced appetite,Cramping,Nausea,Mouth sores
+Celiac Disease,Diarrhea,Abdominal pain,Bloating,Gas,Fatigue,Weight loss,Anemia,Nausea,Vomiting,Constipation
+Appendicitis,Lower right abdominal pain,Nausea,Vomiting,Loss of appetite,Fever,Constipation,Diarrhea,Abdominal swelling,Inability to pass gas,Tenderness
+Kidney Stones,Severe pain in side,Lower back pain,Abdominal pain,Pain during urination,Nausea,Vomiting,Blood in urine,Frequent urination,Fever,Chills
+Rheumatoid Arthritis,Joint pain,Joint swelling,Joint stiffness,Morning stiffness,Fatigue,Fever,Loss of appetite,Weight loss,Weakness,Symmetrical pain
+Osteoarthritis,Joint pain,Stiffness,Loss of flexibility,Tenderness,Grating sensation,Bone spurs,Swelling,Pain worsens with activity,Morning stiffness,Reduced range of motion
+Gout,Intense joint pain,Redness,Swelling,Warmth,Tenderness,Limited range of motion,Persistent discomfort,Inflammation,Tophi,Fever
+Osteoporosis,Back pain,Loss of height,Stooped posture,Bone fractures,Weakness,Compression fractures,Kyphosis,Reduced mobility,Chronic pain,Frailty
+Anemia,Fatigue,Weakness,Pale skin,Shortness of breath,Dizziness,Cold hands and feet,Brittle nails,Headache,Irregular heartbeat,Chest pain
+Leukemia,Fatigue,Weakness,Frequent infections,Fever,Easy bruising,Easy bleeding,Weight loss,Swollen lymph nodes,Night sweats,Bone pain
+Lymphoma,Swollen lymph nodes,Fatigue,Unexplained weight loss,Fever,Night sweats,Itching,Chest pain,Abdominal pain,Shortness of breath,Loss of appetite
+Melanoma,Change in existing mole,New unusual growth,Mole changes color,Mole changes size,Irregular borders,Multiple colors in mole,Itching,Bleeding,Asymmetrical mole,Sore that doesn't heal
+Cancer,Unexplained weight loss,Fatigue,Persistent pain,Fever,Night sweats,Changes in skin,Unusual bleeding,Lumps,Difficulty swallowing,Persistent cough
+HIV/AIDS,Fever,Fatigue,Swollen lymph nodes,Weight loss,Diarrhea,Night sweats,Recurrent infections,Rash,Sore throat,Pneumonia
+Hepatitis B,Fatigue,Abdominal pain,Nausea,Vomiting,Loss of appetite,Dark urine,Jaundice,Joint pain,Fever,Clay-colored stool
+Malaria,High fever,Chills,Sweating,Headache,Nausea,Vomiting,Diarrhea,Abdominal pain,Muscle pain,Fatigue
+Typhoid,Prolonged fever,Weakness,Abdominal pain,Headache,Loss of appetite,Constipation,Diarrhea,Rash,Enlarged spleen,Confusion
+Cholera,Severe diarrhea,Dehydration,Vomiting,Rapid heart rate,Loss of skin elasticity,Dry mucous membranes,Low blood pressure,Muscle cramps,Thirst,Fatigue
+Dengue,High fever,Severe headache,Pain behind eyes,Joint pain,Muscle pain,Rash,Nausea,Vomiting,Mild bleeding,Fatigue
+Migraine,Severe headache,Throbbing pain,Nausea,Vomiting,Sensitivity to light,Sensitivity to sound,Visual disturbances,Aura,Dizziness,Fatigue
+Alzheimer's Disease,Memory loss,Difficulty planning,Confusion with time,Difficulty completing tasks,Misplacing things,Poor judgment,Withdrawal from activities,Mood changes,Personality changes,Difficulty with words
+Parkinson's Disease,Tremor,Slowed movement,Rigid muscles,Impaired balance,Loss of automatic movements,Speech changes,Writing changes,Stooped posture,Reduced facial expressions,Difficulty walking
+Multiple Sclerosis,Numbness,Tingling,Weakness,Vision problems,Dizziness,Fatigue,Bladder issues,Bowel issues,Balance problems,Coordination problems
+Epilepsy,Seizures,Loss of consciousness,Staring spells,Confusion,Temporary loss of awareness,Uncontrollable jerking,Fear,Anxiety,Aura,Repetitive movements
+Stroke,Sudden numbness,Face drooping,Arm weakness,Speech difficulty,Confusion,Trouble seeing,Severe headache,Dizziness,Loss of balance,Loss of coordination
+Hypothyroidism,Fatigue,Weight gain,Cold sensitivity,Constipation,Dry skin,Puffy face,Hoarseness,Muscle weakness,Elevated cholesterol,Depression
+Hyperthyroidism,Weight loss,Rapid heartbeat,Increased appetite,Nervousness,Tremor,Sweating,Heat sensitivity,Frequent bowel movements,Fatigue,Difficulty sleeping
+Sinusitis,Facial pain,Nasal congestion,Thick nasal discharge,Reduced sense of smell,Headache,Cough,Fatigue,Dental pain,Ear pressure,Fever
+Laryngitis,Hoarseness,Weak voice,Sore throat,Dry throat,Tickling sensation,Cough,Difficulty swallowing,Fever,Swollen lymph nodes,Voice loss
+Tonsillitis,Sore throat,Difficulty swallowing,Swollen tonsils,White patches on tonsils,Fever,Tender lymph nodes,Bad breath,Headache,Ear pain,Stiff neck
+Angina,Chest pain,Pressure in chest,Pain radiating to arm,Shortness of breath,Nausea,Fatigue,Sweating,Dizziness,Pain in jaw,Indigestion
+Atrial Fibrillation,Irregular heartbeat,Heart palpitations,Fatigue,Shortness of breath,Chest pain,Dizziness,Lightheadedness,Weakness,Reduced exercise capacity,Confusion
+Deep Vein Thrombosis,Leg pain,Swelling in leg,Warmth in affected area,Red or discolored skin,Cramping,Tenderness,Enlarged veins,Heavy feeling in leg,Skin changes,Pain worsens when walking
+Meningitis,Severe headache,Stiff neck,High fever,Sensitivity to light,Confusion,Nausea,Vomiting,Drowsiness,Difficulty concentrating,Seizures
+Vertigo,Spinning sensation,Dizziness,Balance problems,Nausea,Vomiting,Sweating,Abnormal eye movements,Headache,Ringing in ears,Hearing loss
+Trigeminal Neuralgia,Severe facial pain,Electric shock sensation,Pain triggered by touch,Pain in jaw,Pain in cheek,Pain in teeth,Pain in gums,Spasms,Pain on one side,Brief pain episodes
+Hypoglycemia,Shakiness,Nervousness,Sweating,Chills,Confusion,Rapid heartbeat,Lightheadedness,Hunger,Irritability,Headache
+Addison's Disease,Extreme fatigue,Weight loss,Low blood pressure,Salt craving,Darkened skin,Muscle weakness,Depression,Irritability,Nausea,Diarrhea
+Cushing's Syndrome,Weight gain,Fatty deposits,Purple stretch marks,Round face,Thinning skin,Slow healing,Acne,Fatigue,Muscle weakness,High blood pressure
+Pancreatitis,Upper abdominal pain,Pain radiating to back,Nausea,Vomiting,Fever,Rapid pulse,Tender abdomen,Weight loss,Oily stools,Pain after eating
+Gallstones,Upper right abdominal pain,Pain between shoulder blades,Right shoulder pain,Nausea,Vomiting,Indigestion,Bloating,Pain after fatty meals,Jaundice,Clay-colored stools
+Diverticulitis,Lower left abdominal pain,Fever,Nausea,Vomiting,Constipation,Diarrhea,Bloating,Cramping,Tender abdomen,Change in bowel habits
+Urinary Tract Infection,Burning during urination,Frequent urination,Urgent need to urinate,Cloudy urine,Strong-smelling urine,Pelvic pain,Lower abdominal pain,Blood in urine,Fever,Fatigue
+Bladder Infection,Painful urination,Frequent urination,Lower abdominal pressure,Pelvic discomfort,Urgent urination,Blood in urine,Cloudy urine,Foul-smelling urine,Mild fever,Back pain
+Kidney Infection,Fever,Chills,Back pain,Groin pain,Nausea,Vomiting,Frequent urination,Painful urination,Cloudy urine,Blood in urine
+Psoriasis,Red patches,Silvery scales,Dry skin,Cracked skin,Itching,Burning sensation,Thickened skin,Pitted nails,Joint pain,Stiff joints
+Eczema,Itchy skin,Red rash,Dry skin,Cracked skin,Thickened skin,Small bumps,Oozing,Crusting,Sensitive skin,Inflamed skin
+Shingles,Pain,Burning sensation,Tingling,Numbness,Red rash,Fluid-filled blisters,Itching,Fever,Headache,Sensitivity to touch
+Fibromyalgia,Widespread pain,Fatigue,Sleep problems,Morning stiffness,Headaches,Memory problems,Concentration difficulty,Tender points,Numbness,Tingling
+Tendinitis,Pain at tendon,Tenderness,Mild swelling,Pain worsens with movement,Stiffness,Weakness,Grating sensation,Warmth,Redness,Difficulty moving joint
+Bursitis,Joint pain,Tenderness,Swelling,Warmth,Redness,Stiffness,Pain worsens with movement,Limited range of motion,Aching,Sharp pain with pressure
+Mononucleosis,Extreme fatigue,Sore throat,Fever,Swollen lymph nodes,Swollen tonsils,Headache,Skin rash,Loss of appetite,Muscle aches,Enlarged spleen
+Chickenpox,Itchy rash,Red spots,Fluid-filled blisters,Fever,Fatigue,Loss of appetite,Headache,Spots on body,Spots on face,Spots on scalp
+Mumps,Swollen salivary glands,Jaw pain,Difficulty chewing,Difficulty swallowing,Fever,Headache,Muscle aches,Fatigue,Loss of appetite,Earache
+Sickle Cell Disease,Pain episodes,Swelling in hands,Swelling in feet,Frequent infections,Delayed growth,Vision problems,Fatigue,Jaundice,Shortness of breath,Dizziness
+Hemophilia,Easy bruising,Large bruises,Bleeding into joints,Joint pain,Joint swelling,Blood in urine,Blood in stool,Nosebleeds,Prolonged bleeding,Unexplained bleeding
+Thrombocytopenia,Easy bruising,Petechiae,Prolonged bleeding,Blood in urine,Blood in stool,Heavy menstrual bleeding,Nosebleeds,Bleeding gums,Fatigue,Enlarged spleen
