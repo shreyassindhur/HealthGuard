@@ -123,8 +123,8 @@ def nlp_extract_candidates(text, symptoms_list):
 
 # Set the theme for the app and layout
 st.set_page_config(
-    page_title="🩺 HealthGuard - Disease Prediction",
-    page_icon="🩺",
+    page_title=" HealthGuard - Disease Prediction",
+ 
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -310,11 +310,11 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Header Section
-st.title("🩺 HealthGuard - AI Disease Prediction System")
+st.title("🩺 HealthGuard: AI Based Disease Prediction System")
 st.markdown("""
 **Welcome to HealthGuard**
 
-An AI-powered system that helps identify potential diseases based on symptoms or medical reports. 
+A Hybrid Explainable AI and OCR-Based System for Transparent Disease Prediction and Medical Report Analysis
 **Note:** This is a screening tool and NOT a substitute for professional medical diagnosis.
 """)
 
