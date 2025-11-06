@@ -129,6 +129,22 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# Theme helpers for better contrast in light/dark mode
+def _get_theme_colors():
+    try:
+        base = st.get_option('theme.base')
+    except Exception:
+        base = 'light'
+    is_dark = str(base).lower() == 'dark'
+    colors = {
+        'text': '#e5e7eb' if is_dark else '#2c3e50',
+        'grid': 'rgba(255,255,255,0.18)' if is_dark else 'rgba(128,128,128,0.3)',
+        'bar':  '#60a5fa' if is_dark else '#4a90e2',
+        'pos':  '#22c55e',
+        'neg':  '#ef4444'
+    }
+    return is_dark, colors
+
 # Custom CSS for better styling
 st.markdown("""
 <style>
@@ -139,6 +155,30 @@ st.markdown("""
         padding-left: 3rem !important;
         padding-right: 3rem !important;
         max-width: 100% !important;
+        width: 100% !important;
+    }
+    /* More robust selector for newer Streamlit versions */
+    [data-testid="stAppViewContainer"] > .main > div.block-container {
+        max-width: 100% !important;
+        width: 100% !important;
+        padding-left: 3rem !important;
+        padding-right: 3rem !important;
+    }
+
+    /* Streamlit 1.49+ containers */
+    [data-testid="stAppViewBlockContainer"],
+    [data-testid="stMainBlockContainer"],
+    [data-testid="stVerticalBlock"],
+    [data-testid="stHorizontalBlock"],
+    [data-testid="stBlock"] {
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+
+    /* Ensure the main section itself isn't constraining width */
+    section.main {
+        max-width: 100vw !important;
+        width: 100% !important;
     }
     
     /* Header styling */
@@ -153,12 +193,21 @@ st.markdown("""
         font-size: 1.8rem !important;
         margin-top: 1.5rem !important;
         margin-bottom: 1rem !important;
+        word-break: normal;           /* allow natural wrapping */
+        overflow-wrap: anywhere;      /* break long phrases nicely */
     }
     
     h3 {
         color: #34495e;
         font-size: 1.3rem !important;
         margin-top: 1rem !important;
+        word-break: normal;
+        overflow-wrap: anywhere;
+    }
+    
+    h4, h5, h6, p, span, li {
+        word-break: normal;
+        overflow-wrap: anywhere;
     }
     
     /* Button styling */
@@ -170,6 +219,8 @@ st.markdown("""
         border-radius: 8px;
         border: none;
         transition: all 0.3s ease;
+        white-space: normal;          /* allow button text to wrap at spaces */
+        line-height: 1.2;             /* compact button label lines */
     }
     
     .stButton > button:hover {
@@ -234,9 +285,15 @@ st.markdown("""
     }
     
     /* Plotly charts - full width */
-    .js-plotly-plot {
-        width: 100% !important;
-    }
+    .js-plotly-plot { width: 100% !important; }
+    [data-testid="stPlotlyChart"] { width: 100% !important; }
+
+    /* Make expanders and their contents full-width */
+    [data-testid="stExpander"] { width: 100% !important; max-width: 100% !important; }
+    [data-testid="stExpander"] > div { width: 100% !important; max-width: 100% !important; margin-left: 0 !important; margin-right: 0 !important; }
+    [data-testid="stExpander"] .js-plotly-plot,
+    [data-testid="stExpander"] [data-testid="stPlotlyChart"] { width: 100% !important; }
+    [data-testid="stPlotlyChart"] > div { width: 100% !important; }
     
     /* Tab content */
     .stTabs [data-baseweb="tab-panel"] {
@@ -247,6 +304,8 @@ st.markdown("""
     .row-widget.stHorizontal {
         gap: 1rem;
     }
+
+    /* (Removed overly broad min-width rule that squeezed other columns) */
 </style>
 """, unsafe_allow_html=True)
 
@@ -643,78 +702,79 @@ def predict_and_display(selected_symptoms, model, df, output_column=None):
     matching_symptoms = [s for s in selected_symptoms if s in top_disease_symptoms]
     match_ratio = len(matching_symptoms) / len(selected_symptoms) if selected_symptoms else 0
     
-    # Present results side by side: Info box on left, Chart on right
-    result_col1, result_col2 = st.columns([1, 2])
-    
-    with result_col1:
-        # Top prediction box
+    # 1) Full-width Top Prediction banner
+    with st.container():
+        st.markdown("### 🎯 Top prediction")
+        st.markdown(f"## {top_disease}")
         if match_ratio < 0.5 or top_confidence < 40:
-            st.warning(f'⚠️ **Top prediction:**')
-            st.markdown(f"## {top_disease}")
-            st.caption(f'{top_confidence:.1f}% - Low confidence')
-            st.caption(f'Only {len(matching_symptoms)}/{len(selected_symptoms)} symptoms match.')
+            st.caption(f"{top_confidence:.1f}% - Low confidence")
+            st.caption(f"Only {len(matching_symptoms)}/{len(selected_symptoms)} symptoms match.")
         else:
-            st.success(f'✅ **Top prediction:**')
-            st.markdown(f"## {top_disease}")
-            st.caption(f'{top_confidence:.1f}% confidence')
+            st.caption(f"{top_confidence:.1f}% confidence")
             if len(matching_symptoms) > 0:
-                st.caption(f'Matched: {", ".join(matching_symptoms)}')
-        
-        st.markdown("")
+                st.caption(f"Matched: {', '.join(matching_symptoms)}")
+
+    # 2) Full-width Prediction Chart
+    st.markdown("### 📊 Prediction Results")
+    max_prob = float(top_5['Probability'].max()) if len(top_5) else 100.0
+    _is_dark, _c = _get_theme_colors()
+    fig = px.bar(
+        top_5.reset_index(),
+        x='Probability',
+        y='index',
+        orientation='h',
+        labels={'index': '', 'Probability': 'Confidence (%)'},
+        text='Probability',
+        color_discrete_sequence=[_c['bar']]
+    )
+    fig.update_traces(
+        texttemplate='%{text:.1f}% ',
+        textposition='outside',
+        cliponaxis=False,
+        textfont=dict(size=16, color=_c['text'], family='Arial'),
+        marker=dict(line=dict(width=0))
+    )
+    fig.update_layout(
+        height=max(360, 68 * len(top_5)),
+        margin=dict(l=60, r=16, t=10, b=42),
+        showlegend=False,
+        xaxis_title="Confidence (%)",
+        yaxis_title="",
+        font=dict(size=15, color=_c['text'], family='Arial'),
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)',
+        xaxis=dict(
+            showgrid=True,
+            gridcolor=_c['grid'],
+            range=[0, min(100, max_prob * 1.35)],
+            tickfont=dict(size=14, color=_c['text']),
+            title_font=dict(size=15, color=_c['text'])
+        ),
+        yaxis=dict(
+            tickfont=dict(size=16, color=_c['text']),
+            automargin=True,
+            tickmode='linear',
+            side='left'
+        ),
+        bargap=0.12,
+        uniformtext_minsize=12,
+        uniformtext_mode='hide'
+    )
+    st.plotly_chart(
+        fig,
+        use_container_width=True,
+        config={"responsive": True, "displayModeBar": False}
+    )
+
+    # 3) Secondary info row below the chart
+    info_col1, info_col2 = st.columns([1, 1])
+    with info_col1:
         st.markdown("**Top 5 disease probabilities**")
-        
-        # Additional suggestions
+    with info_col2:
         remaining_diseases = prediction_df.iloc[5:].index.tolist()
         if remaining_diseases:
-            st.markdown("")
             additional_diseases = random.sample(remaining_diseases, min(4, len(remaining_diseases)))
             st.caption('**Additional diseases to consider:** ' + ', '.join(additional_diseases))
-    
-    with result_col2:
-        st.markdown("### 📊 Prediction Results")
-        
-        # Create a compact bar chart
-        fig = px.bar(
-            top_5.reset_index(), 
-            x='Probability', 
-            y='index', 
-            orientation='h', 
-            labels={'index': '', 'Probability': 'Confidence (%)'},
-            color='Probability',
-            color_continuous_scale=['#5da4e8', '#4a90e2', '#357abd'],
-            text='Probability'
-        )
-        fig.update_traces(
-            texttemplate='%{text:.1f}%', 
-            textposition='outside',
-            textfont=dict(size=16, color='white', family='Arial'),
-            marker=dict(line=dict(width=0))
-        )
-        fig.update_layout(
-            height=450,
-            margin=dict(l=200, r=140, t=20, b=50),
-            showlegend=False,
-            xaxis_title="Confidence (%)",
-            yaxis_title="",
-            font=dict(size=15, color='white', family='Arial'),
-            plot_bgcolor='rgba(0,0,0,0)',
-            paper_bgcolor='rgba(0,0,0,0)',
-            xaxis=dict(
-                showgrid=True, 
-                gridcolor='rgba(128,128,128,0.3)',
-                range=[0, max(top_5['Probability']) * 1.25],
-                tickfont=dict(size=14),
-                title_font=dict(size=15)
-            ),
-            yaxis=dict(
-                tickfont=dict(size=16, color='white'),
-                automargin=True,
-                tickmode='linear',
-                side='left'
-            ),
-            bargap=0.12
-        )
-        st.plotly_chart(fig, use_container_width=True)
     
     # Download button below
     st.download_button('📥 Download Results (CSV)', 
@@ -752,83 +812,80 @@ def predict_and_display(selected_symptoms, model, df, output_column=None):
                 # Sort by absolute importance (show most impactful first)
                 symptom_importance.sort(key=lambda x: abs(x['importance']), reverse=True)
                 
-                # Horizontal layout: Chart on left (60%), Summary on right (40%)
-                col_ai_chart, col_ai_info = st.columns([3, 2])
-                
-                with col_ai_chart:
-                    st.markdown(f"**Symptom Analysis for {top_disease}**")
-                    
-                    # Create clean visualization
-                    imp_df = pd.DataFrame(symptom_importance)
-                    imp_df['color'] = imp_df['in_disease'].apply(lambda x: '✅ Matches' if x else '❌ Does Not Match')
-                    
-                    fig_importance = px.bar(
-                        imp_df, 
-                        x='importance', 
-                        y='symptom',
-                        orientation='h',
-                        color='color',
-                        color_discrete_map={'✅ Matches': '#2ecc71', '❌ Does Not Match': '#e74c3c'},
-                        labels={'importance': '', 'symptom': ''},
-                        text='importance'
-                    )
-                    fig_importance.update_traces(
-                        texttemplate='%{text:.1f}', 
-                        textposition='outside',
-                        textfont=dict(size=15, family='Arial'),
-                        marker=dict(line=dict(width=0))
-                    )
-                    fig_importance.update_layout(
-                        height=max(300, len(symptom_importance) * 70),  # Even more height per symptom
-                        showlegend=True,
-                        margin=dict(l=220, r=100, t=15, b=45),  # HUGE left margin (220px)
-                        legend=dict(
-                            orientation="h",
-                            yanchor="bottom",
-                            y=1.02,
-                            xanchor="center",
-                            x=0.5,
-                            font=dict(size=14)
-                        ),
-                        font=dict(size=15, family='Arial'),
-                        plot_bgcolor='rgba(0,0,0,0)',
-                        paper_bgcolor='rgba(0,0,0,0)',
-                        xaxis=dict(
-                            showgrid=True, 
-                            gridcolor='rgba(128,128,128,0.3)',
-                            zeroline=True,
-                            zerolinecolor='gray',
-                            zerolinewidth=2,
-                            tickfont=dict(size=14)
-                        ),
-                        yaxis=dict(
-                            tickfont=dict(size=16),  # Larger symptom names
-                            automargin=True,
-                            side='left'
-                        ),
-                        bargap=0.15
-                    )
-                    st.plotly_chart(fig_importance, use_container_width=True)
-                
-                with col_ai_info:
-                    # Clean summary
+                # Full-width chart first for clarity
+                st.markdown(f"**Symptom Analysis for {top_disease}**")
+
+                # Create clean visualization
+                imp_df = pd.DataFrame(symptom_importance)
+                imp_df['color'] = imp_df['in_disease'].apply(lambda x: '✅ Matches' if x else '❌ Does Not Match')
+
+                fig_importance = px.bar(
+                    imp_df,
+                    x='importance',
+                    y='symptom',
+                    orientation='h',
+                    color='color',
+                    color_discrete_map={'✅ Matches': _c['pos'], '❌ Does Not Match': _c['neg']},
+                    labels={'importance': '', 'symptom': ''},
+                    text='importance'
+                )
+                fig_importance.update_traces(
+                    texttemplate='%{text:.1f}',
+                    textposition='outside',
+                    textfont=dict(size=15, family='Arial', color=_c['text']),
+                    marker=dict(line=dict(width=0))
+                )
+                fig_importance.update_layout(
+                    height=max(320, len(symptom_importance) * 56),
+                    showlegend=True,
+                    margin=dict(l=100, r=16, t=12, b=36),
+                    legend=dict(
+                        orientation="h",
+                        yanchor="bottom",
+                        y=1.02,
+                        xanchor="center",
+                        x=0.5,
+                        font=dict(size=14, color=_c['text'])
+                    ),
+                    legend_title_text='',
+                    font=dict(size=15, family='Arial', color=_c['text']),
+                    plot_bgcolor='rgba(0,0,0,0)',
+                    paper_bgcolor='rgba(0,0,0,0)',
+                    xaxis=dict(
+                        showgrid=True,
+                        gridcolor=_c['grid'],
+                        zeroline=True,
+                        zerolinecolor='gray',
+                        zerolinewidth=2,
+                        tickfont=dict(size=14, color=_c['text'])
+                    ),
+                    yaxis=dict(
+                        tickfont=dict(size=16, color=_c['text']),
+                        automargin=True,
+                        side='left'
+                    ),
+                    bargap=0.15
+                )
+                st.plotly_chart(
+                    fig_importance,
+                    use_container_width=True,
+                    config={"responsive": True, "displayModeBar": False}
+                )
+
+                # Summary below the chart (two columns)
+                col_sum_1, col_sum_2 = st.columns([1, 1])
+                with col_sum_1:
                     matching = [s['symptom'] for s in symptom_importance if s['in_disease']]
-                    non_matching = [s['symptom'] for s in symptom_importance if not s['in_disease']]
-                    
-                    st.markdown("**Analysis Summary**")
-                    st.markdown("")
-                    
                     if matching:
                         st.markdown(f"✅ **Matching ({len(matching)}):**")
                         for s in matching:
                             st.markdown(f"• {s}")
-                        st.markdown("")
-                    
+                with col_sum_2:
+                    non_matching = [s['symptom'] for s in symptom_importance if not s['in_disease']]
                     if non_matching:
                         st.markdown(f"❌ **Non-matching ({len(non_matching)}):**")
                         for s in non_matching:
                             st.markdown(f"• {s}")
-                        st.markdown("")
                         st.caption("⚠️ May indicate multiple conditions")
                 
                 # Compact disease profile in 2 columns below
@@ -867,7 +924,8 @@ with tab1:
     min_required = 3
 
     def display_dropdowns():
-        # Display each symptom dropdown
+        # Display dropdowns in two responsive columns to avoid narrow, tall layouts
+        col_left, col_right = st.columns(2)
         for i in range(len(st.session_state.selected_symptoms)):
             # options exclude other already-selected symptoms to avoid duplicates
             other = st.session_state.selected_symptoms[:i] + st.session_state.selected_symptoms[i+1:]
@@ -877,8 +935,10 @@ with tab1:
                 index = options.index(current) if current in options else 0
             except Exception:
                 index = 0
-            
-            selected = st.selectbox(f'Symptom {i+1}', options=options, index=index, key=f'dropdown_{i}')
+
+            target_col = col_left if i % 2 == 0 else col_right
+            with target_col:
+                selected = st.selectbox(f'Symptom {i+1}', options=options, index=index, key=f'dropdown_{i}')
             st.session_state.selected_symptoms[i] = selected
 
     display_dropdowns()
@@ -886,7 +946,8 @@ with tab1:
     st.markdown("")  # Spacing
     
     # Action buttons in a compact row
-    button_col1, button_col2, button_col3 = st.columns([1, 1, 3])
+    # Widen the first two columns so long button labels don't wrap vertically
+    button_col1, button_col2, button_col3 = st.columns([2, 2, 3])
     
     with button_col1:
         if len(st.session_state.selected_symptoms) < max_symptoms:
